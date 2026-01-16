@@ -20,6 +20,7 @@
 #include "databasetasks.h"
 #include "script.h"
 #include <fstream>
+#include "battlepass.h"
 #include <fmt/color.h>
 #if __has_include("gitmetadata.h")
 	#include "gitmetadata.h"
@@ -222,6 +223,12 @@ void mainLoader(int, char*[], ServiceManager* services)
 
 	if (!Item::items.loadFromXml()) {
 		startupErrorMessage("Unable to load items (XML)!");
+		return;
+	}
+
+	std::cout << ">> Loading Battlepass" << std::endl;
+	if (!BattlePasses::getInstance()->load()) {
+		startupErrorMessage("Unable to load battlepass!");
 		return;
 	}
 
